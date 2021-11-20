@@ -9,6 +9,8 @@
 namespace glpp {
 namespace ext {
 
+/// + Automatic uniform location handling: the first time a uniform is encountered its location is looked up, and then it is stored in a cache for next time
+/// + set() recognizes glm types and sets the uniform accordingly
 class Program {
 public:
     void       attach_shader(GLuint shader_id) const { _program.attach_shader(shader_id); }
