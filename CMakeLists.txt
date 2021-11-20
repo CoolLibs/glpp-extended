@@ -13,6 +13,9 @@ endif()
 # ---Add glpp---
 add_subdirectory(lib/glpp)
 target_link_libraries(glpp-extended PUBLIC glpp::glpp)
+# ---Add glm--- 
+add_subdirectory(lib/glm) 
+target_link_libraries(glpp-extended PUBLIC glm) 
 
 # ---Add source files---
 target_include_directories(glpp-extended INTERFACE include)
