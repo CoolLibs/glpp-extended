@@ -20,5 +20,5 @@ target_link_libraries(glpp-extended PUBLIC glm)
 # ---Add source files---
 target_include_directories(glpp-extended INTERFACE include)
 target_sources(glpp-extended PRIVATE
-    src/dummy.cpp
+    src/Program.cpp
 )
