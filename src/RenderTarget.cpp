@@ -1,10 +1,28 @@
 #include "RenderTarget.h"
 
+namespace glpp {
+
+RenderTarget::RenderTarget()
+{
+    // const auto prev_fb = get_current_framebuffer();
+    bind_framebuffer(_framebuffer);
+    _texture.bind();
+    _texture.resize(size());
+
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, *_texture, 0);
+    check_errors();
+    // bind_framebuffer(prev_fb);
+}
+
 void RenderTarget::bind() const
 {
-    _framebuffer.bind();
-    glViewport(0, 0, width(), height());
-    check_errors();
+    bind_framebuffer(_framebuffer);
+    viewport(0, 0, width(), height());
+}
+
+ImageSize RenderTarget::size() const
+{
+    return {1280, 720};
 }
 
 void RenderTarget::blit_to(const RenderTarget& destination, Interpolation interpolation)
@@ -14,12 +32,12 @@ void RenderTarget::blit_to(const RenderTarget& destination, Interpolation interp
 
 void RenderTarget::blit_to(GLuint dst_framebuffer_id, ImageSize dst_framebuffer_size, Interpolation interpolation)
 {
-    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, dst_framebuffer_id);
-    check_errors();
-    glBindFramebuffer(GL_READ_FRAMEBUFFER, *_framebuffer);
-    check_errors();
-    glBlitFramebuffer(0, 0, width(), height(), 0, 0, dst_framebuffer_size.width(), dst_framebuffer_size.height(), GL_COLOR_BUFFER_BIT, raw(interpolation));
-    check_errors();
-    glBindFramebuffer(GL_READ_FRAMEBUFFER, dst_framebuffer_id); // Make sure that dst_framebuffer is bound also as read because we promise that it mimics bind()
-    check_errors();
+    bind_framebuffer_as_draw(dst_framebuffer_id);
+    bind_framebuffer_as_read(_framebuffer);
+    blit_framebuffer(0, 0, width(), height(),
+                     0, 0, dst_framebuffer_size.width(), dst_framebuffer_size.height(),
+                     GL_COLOR_BUFFER_BIT, interpolation);
+    bind_framebuffer_as_read(dst_framebuffer_id); // Make sure that dst_framebuffer is bound also as read because we promise that it mimics bind()
 }
+
+} // namespace glpp

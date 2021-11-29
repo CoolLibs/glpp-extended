@@ -1,18 +1,17 @@
 #pragma once
 
-#include <glpp/Objects/Framebuffer.h>
-#include <glpp/Objects/Texture.h>
+#include <glpp/glpp.hpp>
 #include "ImageSize.h"
+#include "Texture.h"
 
 namespace glpp {
-namespace ext {
 
 class RenderTarget {
 public:
-    const Texture& texture() const { return _texture; }
+    RenderTarget();
 
-    /// Returns the RenderTarget that corresponds to the screen (i.e. OpenGL's default framebuffer)
-    static const RenderTarget& screen();
+    const Texture&           texture() const { return _texture; }
+    const UniqueFramebuffer& framebuffer() const { return _framebuffer; }
 
     /// Binds this render target so that it will be the one that the following draw calls will render to
     /// It also calls glViewport to adapt it to the size of this framebuffer
@@ -27,9 +26,8 @@ public:
     void blit_to(GLuint dst_framebuffer_id, ImageSize dst_framebuffer_size, Interpolation interpolation);
 
 private:
-    Framebuffer _framebuffer;
-    Texture     _texture;
+    UniqueFramebuffer _framebuffer;
+    Texture           _texture;
 };
 
-} // namespace ext
 } // namespace glpp

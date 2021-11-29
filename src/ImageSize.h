@@ -1,9 +1,9 @@
 #pragma once
 
+#include <glad/glad.h>
 #include <cassert>
 
 namespace glpp {
-namespace ext {
 
 /// Represents the width and height of an axis-aligned rectangle. width() and height() are guaranteed to be >= 1
 class ImageSize {
@@ -14,7 +14,6 @@ public:
     {
         assert(w >= 1 && h >= 1);
     }
-    friend bool operator==(const GLsizei&, const GLsizei&) = default;
 
     GLsizei width() const { return _width; }
     GLsizei height() const { return _height; }
@@ -38,5 +37,4 @@ private:
     GLsizei _height;
 };
 
-} // namespace ext
 } // namespace glpp
