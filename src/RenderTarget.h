@@ -25,6 +25,8 @@ public:
     /// /!\ Changes the bound RenderTarget to be dst_framebuffer_id
     void blit_to(GLuint dst_framebuffer_id, ImageSize dst_framebuffer_size, Interpolation interpolation);
 
+    static GLuint screen_framebuffer_id() { return 0; }
+
 private:
     UniqueFramebuffer _framebuffer;
     Texture           _texture;
