@@ -12,13 +12,15 @@ public:
             Wrap          horizontal_wrap      = Wrap::Repeat,
             Wrap          vertical_wrap        = Wrap::Repeat);
 
-    void   bind();
-    void   resize(ImageSize size);
-    void   upload_data(ImageSize size, void* data);
-    GLuint operator*() const { return *_id; }
+    void      bind() const;
+    ImageSize size() const { return _size; }
+    void      resize(ImageSize size);
+    void      upload_data(ImageSize size, void* data);
+    GLuint    operator*() const { return *_id; }
 
 private:
     UniqueTexture _id;
+    ImageSize     _size;
 };
 
 } // namespace glpp

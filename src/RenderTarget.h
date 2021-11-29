@@ -8,13 +8,13 @@ namespace glpp {
 
 class RenderTarget {
 public:
-    RenderTarget();
+    explicit RenderTarget(ImageSize size);
 
     const Texture&           texture() const { return _texture; }
     const UniqueFramebuffer& framebuffer() const { return _framebuffer; }
 
     /// Binds this render target so that it will be the one that the following draw calls will render to
-    /// It also calls glViewport to adapt it to the size of this framebuffer
+    /// It also calls glViewport to set the viewport to the size of this RenderTarget
     void      bind() const;
     void      resize(ImageSize size);
     ImageSize size() const;

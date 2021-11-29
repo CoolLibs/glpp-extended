@@ -14,7 +14,7 @@ Texture::Texture(Interpolation minification_filter,
     set_vertical_wrap(_id, vertical_wrap);
 }
 
-void Texture::bind()
+void Texture::bind() const
 {
     bind_texture(*_id);
 }
@@ -28,6 +28,7 @@ void Texture::upload_data(ImageSize size, void* data)
 {
     bind_texture(_id);
     texture_image(*_id, InternalFormat::RGBA, size.width(), size.height(), Channels::RGBA, TexelDataType::UnsignedByte, data);
+    _size = size;
 }
 
 } // namespace glpp
