@@ -15,8 +15,12 @@ public:
 
     /// Binds this render target so that it will be the one that the following draw calls will render to
     /// It also calls glViewport to set the viewport to the size of this RenderTarget
-    void      bind() const;
-    void      resize(ImageSize size);
+    void bind() const;
+    /// Resizes the render target
+    /// /!\ All of its content is lost. If you don't want that you can use conservative_resize() instead
+    void resize(ImageSize size);
+    /// Resizes the render target and preserves its content
+    void      conservative_resize(ImageSize size);
     ImageSize size() const;
     GLsizei   width() const { return size().width(); }
     GLsizei   height() const { return size().height(); }

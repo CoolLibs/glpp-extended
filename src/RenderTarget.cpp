@@ -25,6 +25,14 @@ void RenderTarget::resize(ImageSize size)
     _texture.resize(size);
 }
 
+void RenderTarget::conservative_resize(ImageSize new_size)
+{
+    RenderTarget tmp{size()};
+    blit_to(tmp, glpp::Interpolation::NearestNeighbour);
+    resize(new_size);
+    tmp.blit_to(*this, glpp::Interpolation::Linear);
+}
+
 ImageSize RenderTarget::size() const
 {
     return _texture.size();
