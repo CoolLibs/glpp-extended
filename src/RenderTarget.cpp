@@ -2,12 +2,12 @@
 
 namespace glpp {
 
-RenderTarget::RenderTarget(ImageSize size)
+RenderTarget::RenderTarget(ImageSize size, const void* data)
 {
     // const auto prev_fb = get_current_framebuffer();
     bind_framebuffer(_framebuffer);
     _texture.bind();
-    _texture.resize(size);
+    _texture.upload_data(size, data);
 
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, *_texture, 0);
     check_errors();

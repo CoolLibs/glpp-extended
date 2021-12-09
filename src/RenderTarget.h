@@ -8,7 +8,8 @@ namespace glpp {
 
 class RenderTarget {
 public:
-    explicit RenderTarget(ImageSize size);
+    /// You can optionally upload some image data
+    explicit RenderTarget(ImageSize size, const void* data = nullptr);
 
     const Texture&           texture() const { return _texture; }
     const UniqueFramebuffer& framebuffer() const { return _framebuffer; }

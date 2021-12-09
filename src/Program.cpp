@@ -1,4 +1,5 @@
 #include "Program.h"
+#include <algorithm>
 #include <glm/gtc/type_ptr.hpp>
 
 namespace glpp {

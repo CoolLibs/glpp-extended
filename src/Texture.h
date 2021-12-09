@@ -15,7 +15,7 @@ public:
     void      bind() const;
     ImageSize size() const { return _size; }
     void      resize(ImageSize size);
-    void      upload_data(ImageSize size, void* data);
+    void      upload_data(ImageSize size, const void* data);
     GLuint    operator*() const { return *_id; }
 
 private:

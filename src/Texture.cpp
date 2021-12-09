@@ -24,7 +24,7 @@ void Texture::resize(ImageSize size)
     upload_data(size, nullptr);
 }
 
-void Texture::upload_data(ImageSize size, void* data)
+void Texture::upload_data(ImageSize size, const void* data)
 {
     bind_texture(_id);
     texture_image(*_id, InternalFormat::RGBA, size.width(), size.height(), Channels::RGBA, TexelDataType::UnsignedByte, data);
