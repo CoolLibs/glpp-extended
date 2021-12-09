@@ -4,14 +4,16 @@ namespace glpp {
 
 RenderTarget::RenderTarget(ImageSize size, const void* data)
 {
-    // const auto prev_fb = get_current_framebuffer();
+    const auto prev_read_fb = get_current_read_framebuffer();
+    const auto prev_draw_fb = get_current_draw_framebuffer();
     bind_framebuffer(_framebuffer);
     _texture.bind();
     _texture.upload_data(size, data);
 
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, *_texture, 0);
     check_errors();
-    // bind_framebuffer(prev_fb);
+    bind_framebuffer_as_read(prev_read_fb);
+    bind_framebuffer_as_draw(prev_draw_fb);
 }
 
 void RenderTarget::bind() const
