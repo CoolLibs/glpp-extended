@@ -13,6 +13,7 @@ public:
             Wrap          vertical_wrap        = Wrap::Repeat);
 
     void      bind() const;
+    void      bind_to_texture_unit(GLenum slot_idx) const;
     ImageSize size() const { return _size; }
     void      resize(ImageSize size);
     void      upload_data(ImageSize size, const void* data);

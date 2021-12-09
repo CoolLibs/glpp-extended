@@ -19,6 +19,12 @@ void Texture::bind() const
     bind_texture(*_id);
 }
 
+void Texture::bind_to_texture_unit(GLenum slot_idx) const
+{
+    active_texture(slot_idx);
+    bind();
+}
+
 void Texture::resize(ImageSize size)
 {
     upload_data(size, nullptr);
