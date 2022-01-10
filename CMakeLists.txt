@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.8)
 
 add_library(glpp-extended)
 add_library(glpp::extended ALIAS glpp-extended)
-target_compile_features(glpp-extended PRIVATE cxx_std_11)
+target_compile_features(glpp-extended PRIVATE cxx_std_17)
 
 if (MSVC)
     target_compile_options(glpp-extended PRIVATE /WX /W4)
