@@ -9,7 +9,9 @@ namespace glpp {
 class RenderTarget {
 public:
     /// You can optionally upload some image data
-    explicit RenderTarget(ImageSize size, const void* data = nullptr);
+    explicit RenderTarget(ImageSize     size,
+                          const void*   data           = nullptr,
+                          TextureLayout texture_layout = {});
 
     const Texture&           texture() const { return _texture; }
     const UniqueFramebuffer& framebuffer() const { return _framebuffer; }
@@ -32,9 +34,12 @@ public:
 
     static GLuint screen_framebuffer_id() { return 0; }
 
+    TextureLayout texture_layout() const { return _texture_layout; }
+
 private:
     UniqueFramebuffer _framebuffer;
     Texture           _texture;
+    TextureLayout     _texture_layout;
 };
 
 } // namespace glpp

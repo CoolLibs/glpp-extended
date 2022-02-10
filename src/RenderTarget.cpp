@@ -2,13 +2,14 @@
 
 namespace glpp {
 
-RenderTarget::RenderTarget(ImageSize size, const void* data)
+RenderTarget::RenderTarget(ImageSize size, const void* data, TextureLayout texture_layout)
+    : _texture_layout{texture_layout}
 {
     const auto prev_read_fb = get_current_read_framebuffer();
     const auto prev_draw_fb = get_current_draw_framebuffer();
     bind_framebuffer(_framebuffer);
     _texture.bind();
-    _texture.upload_data(size, data);
+    _texture.upload_data(size, data, _texture_layout);
 
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, *_texture, 0);
     check_errors();
@@ -24,12 +25,12 @@ void RenderTarget::bind() const
 
 void RenderTarget::resize(ImageSize size)
 {
-    _texture.resize(size);
+    _texture.resize(size, texture_layout());
 }
 
 void RenderTarget::conservative_resize(ImageSize new_size)
 {
-    RenderTarget tmp{size()};
+    RenderTarget tmp{size(), nullptr, texture_layout()};
     blit_to(tmp, glpp::Interpolation::NearestNeighbour);
     resize(new_size);
     tmp.blit_to(*this, glpp::Interpolation::Linear);
