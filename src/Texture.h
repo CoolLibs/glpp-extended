@@ -15,8 +15,8 @@ public:
     void      bind() const;
     void      bind_to_texture_unit(GLenum slot_idx) const;
     ImageSize size() const { return _size; }
-    void      resize(ImageSize size);
-    void      upload_data(ImageSize size, const void* data);
+    void      resize(ImageSize size, InternalFormat internal_format = InternalFormat::RGBA, Channels channels = Channels::RGBA, TexelDataType texel_data_type = TexelDataType::UnsignedByte);
+    void      upload_data(ImageSize size, const void* data, InternalFormat internal_format = InternalFormat::RGBA, Channels channels = Channels::RGBA, TexelDataType texel_data_type = TexelDataType::UnsignedByte);
     GLuint    operator*() const { return *_id; }
 
 private:
