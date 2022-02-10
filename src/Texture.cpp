@@ -25,15 +25,15 @@ void Texture::bind_to_texture_unit(GLenum slot_idx) const
     bind();
 }
 
-void Texture::resize(ImageSize size, InternalFormat internal_format, Channels channels, TexelDataType texel_data_type)
+void Texture::resize(ImageSize size, TextureLayout layout)
 {
-    upload_data(size, nullptr, internal_format, channels, texel_data_type);
+    upload_data(size, nullptr, layout);
 }
 
-void Texture::upload_data(ImageSize size, const void* data, InternalFormat internal_format, Channels channels, TexelDataType texel_data_type)
+void Texture::upload_data(ImageSize size, const void* data, TextureLayout layout)
 {
     bind_texture(_id);
-    texture_image(*_id, internal_format, size.width(), size.height(), channels, texel_data_type, data);
+    texture_image(*_id, layout.internal_format, size.width(), size.height(), layout.channels, layout.texel_data_type, data);
     _size = size;
 }
 
