@@ -12,7 +12,7 @@ RenderTarget::RenderTarget(ImageSize size, const void* data, TextureLayout textu
     _texture.upload_data(size, data, _texture_layout);
 
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, *_texture, 0);
-    check_errors();
+    glpp_check_errors();
     bind_framebuffer_as_read(prev_read_fb);
     bind_framebuffer_as_draw(prev_draw_fb);
 }
