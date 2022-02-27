@@ -5,3 +5,4 @@
 #include "../../src/RenderTarget.h"
 #include "../../src/Texture1D.h"
 #include "../../src/Texture2D.h"
+#include "../../src/Texture3D.h"
