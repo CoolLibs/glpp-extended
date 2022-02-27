@@ -2,7 +2,7 @@
 
 #include <glpp/glpp.hpp>
 #include "ImageSize.h"
-#include "Texture.h"
+#include "Texture2D.h"
 
 namespace glpp {
 
@@ -13,7 +13,7 @@ public:
                           const void*   data           = nullptr,
                           TextureLayout texture_layout = {});
 
-    const Texture&           texture() const { return _texture; }
+    const Texture2D&         texture() const { return _texture; }
     const UniqueFramebuffer& framebuffer() const { return _framebuffer; }
 
     /// Binds this render target so that it will be the one that the following draw calls will render to
@@ -38,7 +38,7 @@ public:
 
 private:
     UniqueFramebuffer _framebuffer;
-    Texture           _texture;
+    Texture2D         _texture;
     TextureLayout     _texture_layout;
 };
 
