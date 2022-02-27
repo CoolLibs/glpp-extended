@@ -4,7 +4,7 @@
 
 namespace glpp::internal {
 
-template<typename SizeType, void (*upload_data_impl)(GLuint, SizeType, const void*, TextureLayout)>
+template<typename UniqueTextureT, typename SizeType, void (*upload_data_impl)(GLuint, SizeType, const void*, TextureLayout)>
 class TextureBase {
 public:
     explicit TextureBase(Interpolation minification_filter  = Interpolation::NearestNeighbour,
@@ -18,7 +18,7 @@ public:
     GLuint   operator*() const { return *_id; }
 
 protected:
-    UniqueTexture2D _id;
+    UniqueTextureT _id;
 
 private:
     SizeType _size{};

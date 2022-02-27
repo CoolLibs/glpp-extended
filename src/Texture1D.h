@@ -16,12 +16,12 @@ inline void upload_data_impl(GLuint id, GLsizei size, const void* data, TextureL
 
 } // namespace internal
 
-class Texture1D : public internal::TextureBase<GLsizei, &internal::upload_data_impl> {
+class Texture1D : public internal::TextureBase<UniqueTexture1D, GLsizei, &internal::upload_data_impl> {
 public:
     explicit Texture1D(Interpolation minification_filter  = Interpolation::NearestNeighbour,
                        Interpolation magnification_filter = Interpolation::Linear,
                        Wrap          wrap                 = Wrap::Repeat)
-        : internal::TextureBase<GLsizei, &internal::upload_data_impl>{minification_filter, magnification_filter}
+        : internal::TextureBase<UniqueTexture1D, GLsizei, &internal::upload_data_impl>{minification_filter, magnification_filter}
     {
         set_wrap_s(_id, wrap);
     }
