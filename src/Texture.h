@@ -2,14 +2,9 @@
 
 #include <glpp/glpp.hpp>
 #include "ImageSize.h"
+#include "TextureLayout.h"
 
 namespace glpp {
-
-struct TextureLayout {
-    InternalFormat internal_format = InternalFormat::RGBA;
-    Channels       channels        = Channels::RGBA;
-    TexelDataType  texel_data_type = TexelDataType::UnsignedByte;
-};
 
 class Texture {
 public:
