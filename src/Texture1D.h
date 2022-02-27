@@ -1,7 +1,6 @@
 #pragma once
 
 #include <glpp/glpp.hpp>
-#include "ImageSize.h"
 #include "TextureLayout.h"
 #include "internal/TextureBase.h"
 
