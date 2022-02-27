@@ -22,6 +22,4 @@ target_include_directories(glpp-extended INTERFACE include)
 target_sources(glpp-extended PRIVATE
     src/Program.cpp
     src/RenderTarget.cpp
-    src/Texture1D.cpp
-    src/Texture2D.cpp
 )
