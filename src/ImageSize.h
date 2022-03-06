@@ -18,6 +18,7 @@ public:
     GLsizei width() const { return _width; }
     GLsizei height() const { return _height; }
     float   aspect_ratio() const { return static_cast<float>(_width) / static_cast<float>(_height); }
+    float   inverse_aspect_ratio() const { return static_cast<float>(_height) / static_cast<float>(_width); }
 
     /// Sets the width. It must be >= 1
     void set_width(GLsizei w)
