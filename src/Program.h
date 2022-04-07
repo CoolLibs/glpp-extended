@@ -9,13 +9,15 @@
 namespace glpp {
 namespace ext {
 
-/// + Automatic uniform location handling: the first time a uniform is encountered its location is looked up, and then it is stored in a cache for next time
-/// + set() recognizes glm types and sets the uniform accordingly
+/// Automatic uniform location handling: the first time a uniform is encountered its location is looked up, and then it is stored in a cache for next time
+/// set() recognizes glm types and sets the uniform accordingly
 class Program {
 public:
-    void       attach_shader(GLuint shader_id) const { _program.attach_shader(shader_id); }
-    void       link() const { _program.link(); }
-    MaybeError check_linking_errors() const { return _program.check_linking_errors(); }
+    void attach_shader(GLuint shader_id) const { _program.attach_shader(shader_id); }
+    void link() const { _program.link(); }
+    /// This is a function to debug the state of your shader
+    /// that you can call just before a draw call to make sure that uniforms don't have weird values and a few other things.
+    MaybeError check_for_state_errors() const { return _program.check_for_state_errors(); }
 
     GLuint operator*() const { return *_program; }
     void   use() const { _program.use(); }
