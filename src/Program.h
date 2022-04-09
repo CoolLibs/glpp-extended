@@ -16,7 +16,8 @@ public:
     void attach_shader(GLuint shader_id) const { _program.attach_shader(shader_id); }
     void link() const { _program.link(); }
     /// This is a function to debug the state of your shader
-    /// that you can call just before a draw call to make sure that uniforms don't have weird values and a few other things.
+    /// that you can call just before a draw call to make sure that uniforms have been properly set and a few other things.
+    /// https://community.khronos.org/t/samplers-of-different-types-use-the-same-textur/66329/4
     MaybeError check_for_state_errors() const { return _program.check_for_state_errors(); }
 
     GLuint operator*() const { return *_program; }
