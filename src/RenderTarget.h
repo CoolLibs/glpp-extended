@@ -17,10 +17,16 @@ struct RenderTargetBindState {
         : read_framebuffer{other.read_framebuffer}
         , draw_framebuffer{other.draw_framebuffer}
     {
-        for (size_t i = 0; i < 4; ++i) {
+        for (size_t i = 0; i < 4; ++i)
+        {
             viewport[i] = other.viewport[i];
         }
     }
+};
+
+struct BlitTopLeftCorner {
+    GLint x{0};
+    GLint y{0};
 };
 
 class RenderTarget {
@@ -48,9 +54,9 @@ public:
     GLsizei   width() const { return size().width(); }
     GLsizei   height() const { return size().height(); }
     /// /!\ Changes the bound RenderTarget to be destination
-    void blit_to(const RenderTarget& destination, Interpolation interpolation);
+    void blit_to(const RenderTarget& destination, Interpolation interpolation, BlitTopLeftCorner position = {});
     /// /!\ Changes the bound RenderTarget to be dst_framebuffer_id
-    void blit_to(GLuint dst_framebuffer_id, ImageSize dst_framebuffer_size, Interpolation interpolation);
+    void blit_to(GLuint dst_framebuffer_id, ImageSize dst_framebuffer_size, Interpolation interpolation, BlitTopLeftCorner position = {});
 
     static GLuint screen_framebuffer_id() { return 0; }
 

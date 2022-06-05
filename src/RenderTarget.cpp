@@ -60,17 +60,18 @@ ImageSize RenderTarget::size() const
     return _texture.size();
 }
 
-void RenderTarget::blit_to(const RenderTarget& destination, Interpolation interpolation)
+void RenderTarget::blit_to(const RenderTarget& destination, Interpolation interpolation, BlitTopLeftCorner position)
 {
-    blit_to(*destination._framebuffer, destination.size(), interpolation);
+    blit_to(*destination._framebuffer, destination.size(), interpolation, position);
 }
 
-void RenderTarget::blit_to(GLuint dst_framebuffer_id, ImageSize dst_framebuffer_size, Interpolation interpolation)
+void RenderTarget::blit_to(GLuint dst_framebuffer_id, ImageSize dst_framebuffer_size, Interpolation interpolation, BlitTopLeftCorner position)
 {
     bind_framebuffer_as_draw(dst_framebuffer_id);
     bind_framebuffer_as_read(_framebuffer);
     blit_framebuffer(0, 0, width(), height(),
-                     0, 0, dst_framebuffer_size.width(), dst_framebuffer_size.height(),
+                     position.x, position.y,
+                     position.x + dst_framebuffer_size.width(), position.y + dst_framebuffer_size.height(),
                      GL_COLOR_BUFFER_BIT, interpolation);
     bind_framebuffer_as_read(dst_framebuffer_id); // Make sure that dst_framebuffer is bound also as read because we promise that it mimics bind()
 }
