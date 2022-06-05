@@ -6,6 +6,23 @@
 
 namespace glpp {
 
+struct RenderTargetBindState {
+    GLint viewport[4];
+    GLint read_framebuffer;
+    GLint draw_framebuffer;
+
+    RenderTargetBindState() = default;
+
+    RenderTargetBindState(const RenderTargetBindState& other)
+        : read_framebuffer{other.read_framebuffer}
+        , draw_framebuffer{other.draw_framebuffer}
+    {
+        for (size_t i = 0; i < 4; ++i) {
+            viewport[i] = other.viewport[i];
+        }
+    }
+};
+
 class RenderTarget {
 public:
     /// You can optionally upload some image data
@@ -15,6 +32,9 @@ public:
 
     const Texture2D&         texture() const { return _texture; }
     const UniqueFramebuffer& framebuffer() const { return _framebuffer; }
+
+    static auto get_current_bind_state() -> RenderTargetBindState;
+    static void restore_bind_state(const RenderTargetBindState&);
 
     /// Binds this render target so that it will be the one that the following draw calls will render to
     /// It also calls glViewport to set the viewport to the size of this RenderTarget
@@ -40,6 +60,25 @@ private:
     UniqueFramebuffer _framebuffer;
     Texture2D         _texture;
     TextureLayout     _texture_layout;
+};
+
+class RenderTargetBindState_RAII {
+public:
+    RenderTargetBindState_RAII()
+        : _state{RenderTarget::get_current_bind_state()}
+    {
+    }
+
+    ~RenderTargetBindState_RAII()
+    {
+        RenderTarget::restore_bind_state(_state);
+    }
+
+    RenderTargetBindState_RAII(const RenderTargetBindState_RAII&) = delete;
+    RenderTargetBindState_RAII& operator=(const RenderTargetBindState_RAII&) = delete;
+
+private:
+    RenderTargetBindState _state;
 };
 
 } // namespace glpp
