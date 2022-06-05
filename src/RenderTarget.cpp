@@ -32,8 +32,8 @@ void RenderTarget::restore_bind_state(const RenderTargetBindState& state)
                state.viewport[1],
                state.viewport[2],
                state.viewport[3]);
-    glBindFramebuffer(GL_READ_FRAMEBUFFER, state.read_framebuffer);
-    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, state.draw_framebuffer);
+    glBindFramebuffer(GL_READ_FRAMEBUFFER, static_cast<GLuint>(state.read_framebuffer));
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, static_cast<GLuint>(state.draw_framebuffer));
 }
 
 void RenderTarget::bind() const
