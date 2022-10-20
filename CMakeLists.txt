@@ -4,16 +4,21 @@ add_library(glpp-extended)
 add_library(glpp::extended ALIAS glpp-extended)
 target_compile_features(glpp-extended PRIVATE cxx_std_17)
 
-if (glpp_extended_ENABLE_WARNINGS_AS_ERRORS)
-    message("-- [glpp-extended] Enabling warnings as errors for glpp-extended")
-    if(MSVC)
-        target_compile_options(glpp-extended PRIVATE /WX /W4)
-    else()
-        target_compile_options(glpp-extended PRIVATE -Werror -Wall -Wextra -Wpedantic -pedantic-errors -Wconversion -Wsign-conversion)
-    endif()
-    set(glpp_ENABLE_WARNINGS_AS_ERRORS true)
+# Set warning level
+if(MSVC)
+    target_compile_options(glpp-extended PRIVATE /W4)
 else()
-    message("-- [glpp-extended] Not using warnings as errors for glpp-extended")
+    target_compile_options(glpp-extended PRIVATE -Wall -Wextra -Wpedantic -pedantic-errors -Wconversion -Wsign-conversion)
+endif()
+
+# Maybe enable warnings as errors
+set(WARNINGS_AS_ERRORS_FOR_GLPP_EXTENDED OFF CACHE BOOL "ON iff you want to treat warnings as errors")
+if(WARNINGS_AS_ERRORS_FOR_GLPP_EXTENDED)
+    if(MSVC)
+        target_compile_options(glpp-extended PRIVATE /WX)
+    else()
+        target_compile_options(glpp-extended PRIVATE -Werror)
+    endif()
 endif()
 
 # ---Add glpp---
