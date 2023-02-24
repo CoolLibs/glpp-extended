@@ -15,6 +15,9 @@ class Program {
 public:
     void attach_shader(GLuint shader_id) const { _program.attach_shader(shader_id); }
     void link() const { _program.link(); }
+
+    /// You can call this function after `link()` to check if there was any errors during the linking.
+    MaybeError check_linking_errors() const { return _program.check_linking_errors(); }
     /// This is a function to debug the state of your shader
     /// that you can call just before a draw call to make sure that uniforms have been properly set and a few other things.
     /// https://community.khronos.org/t/samplers-of-different-types-use-the-same-textur/66329/4
