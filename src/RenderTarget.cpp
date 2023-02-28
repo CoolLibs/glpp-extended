@@ -2,19 +2,25 @@
 
 namespace glpp {
 
-RenderTarget::RenderTarget(ImageSize size, const void* data, TextureLayout texture_layout)
+void RenderTarget::create_depth_buffer(ImageSize size)
+{
+    _depth_buffer = DepthBuffer{size};
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depth_buffer->id());
+    glpp_check_errors();
+}
+
+RenderTarget::RenderTarget(ImageSize size, const void* data, TextureLayout texture_layout, bool create_a_depth_buffer)
     : _texture_layout{texture_layout}
 {
-    const auto prev_read_fb = get_current_read_framebuffer();
-    const auto prev_draw_fb = get_current_draw_framebuffer();
-    bind_framebuffer(_framebuffer);
-    _texture.bind();
-    _texture.upload_data(size, data, _texture_layout);
+    with_bound_framebuffer([&]() {
+        _texture.bind();
+        _texture.upload_data(size, data, _texture_layout);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, *_texture, 0);
+        glpp_check_errors();
 
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, *_texture, 0);
-    glpp_check_errors();
-    bind_framebuffer_as_read(prev_read_fb);
-    bind_framebuffer_as_draw(prev_draw_fb);
+        if (create_a_depth_buffer)
+            create_depth_buffer(size);
+    });
 }
 
 auto RenderTarget::get_current_bind_state() -> RenderTargetBindState
@@ -45,6 +51,13 @@ void RenderTarget::bind() const
 void RenderTarget::resize(ImageSize size)
 {
     _texture.resize(size, texture_layout());
+
+    if (_depth_buffer)
+    {
+        with_bound_framebuffer([&]() {
+            create_depth_buffer(size);
+        });
+    }
 }
 
 void RenderTarget::conservative_resize(ImageSize new_size)

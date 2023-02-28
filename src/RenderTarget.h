@@ -1,6 +1,8 @@
 #pragma once
 
 #include <glpp/glpp.hpp>
+#include <optional>
+#include "DepthBuffer.h"
 #include "ImageSize.h"
 #include "Texture2D.h"
 
@@ -33,8 +35,9 @@ class RenderTarget {
 public:
     /// You can optionally upload some image data
     explicit RenderTarget(ImageSize     size,
-                          const void*   data           = nullptr,
-                          TextureLayout texture_layout = {});
+                          const void*   data                  = nullptr,
+                          TextureLayout texture_layout        = {},
+                          bool          create_a_depth_buffer = false);
 
     const Texture2D&         texture() const { return _texture; }
     const UniqueFramebuffer& framebuffer() const { return _framebuffer; }
@@ -62,10 +65,29 @@ public:
 
     TextureLayout texture_layout() const { return _texture_layout; }
 
+    /// Binds the framebuffer, calls the callback, and then unbinds the framebuffer
+    /// and restores the OpenGL state as it was before the call.
+    template<typename Callable>
+    void with_bound_framebuffer(Callable&& callback)
+    {
+        const auto prev_read_fb = get_current_read_framebuffer();
+        const auto prev_draw_fb = get_current_draw_framebuffer();
+        bind_framebuffer(_framebuffer);
+
+        callback();
+
+        bind_framebuffer_as_read(prev_read_fb);
+        bind_framebuffer_as_draw(prev_draw_fb);
+    }
+
 private:
-    UniqueFramebuffer _framebuffer;
-    Texture2D         _texture;
-    TextureLayout     _texture_layout;
+    void create_depth_buffer(ImageSize size);
+
+private:
+    UniqueFramebuffer          _framebuffer;
+    Texture2D                  _texture;
+    TextureLayout              _texture_layout;
+    std::optional<DepthBuffer> _depth_buffer;
 };
 
 class RenderTargetBindState_RAII {

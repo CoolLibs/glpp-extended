@@ -6,8 +6,7 @@
 #include <utility>
 #include <vector>
 
-namespace glpp {
-namespace ext {
+namespace glpp::ext {
 
 /// Automatic uniform location handling: the first time a uniform is encountered its location is looked up, and then it is stored in a cache for next time
 /// set() recognizes glm types and sets the uniform accordingly
@@ -44,5 +43,4 @@ private:
     mutable std::vector<std::pair<std::string, GLint>> _uniform_locations;
 };
 
-} // namespace ext
-} // namespace glpp
+} // namespace glpp::ext
