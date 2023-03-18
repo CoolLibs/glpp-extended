@@ -1,8 +1,10 @@
 namespace glpp::internal {
 
 template<typename UniqueTextureT, typename SizeType, void (*upload_data_impl)(GLuint, SizeType, const void*, TextureLayout)>
-TextureBase<UniqueTextureT, SizeType, upload_data_impl>::TextureBase(Interpolation minification_filter,
-                                                                     Interpolation magnification_filter)
+TextureBase<UniqueTextureT, SizeType, upload_data_impl>::TextureBase(
+    Interpolation minification_filter,
+    Interpolation magnification_filter
+)
 {
     bind_texture(_id);
     set_minification_filter(_id, minification_filter);

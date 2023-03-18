@@ -7,8 +7,10 @@ namespace glpp::internal {
 template<typename UniqueTextureT, typename SizeType, void (*upload_data_impl)(GLuint, SizeType, const void*, TextureLayout)>
 class TextureBase {
 public:
-    explicit TextureBase(Interpolation minification_filter  = Interpolation::NearestNeighbour,
-                         Interpolation magnification_filter = Interpolation::Linear);
+    explicit TextureBase(
+        Interpolation minification_filter  = Interpolation::NearestNeighbour,
+        Interpolation magnification_filter = Interpolation::Linear
+    );
 
     void     bind() const;
     void     bind_to_texture_unit(GLenum slot_idx) const;

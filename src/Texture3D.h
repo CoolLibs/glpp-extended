@@ -23,11 +23,13 @@ inline void upload_data_impl(GLuint id, Texture3DSize size, const void* data, Te
 
 class Texture3D : public internal::TextureBase<UniqueTexture3D, Texture3DSize, &internal::upload_data_impl> {
 public:
-    explicit Texture3D(Interpolation minification_filter  = Interpolation::NearestNeighbour,
-                       Interpolation magnification_filter = Interpolation::Linear,
-                       Wrap          wrap_width           = Wrap::Repeat,
-                       Wrap          wrap_height          = Wrap::Repeat,
-                       Wrap          wrap_depth           = Wrap::Repeat)
+    explicit Texture3D(
+        Interpolation minification_filter  = Interpolation::NearestNeighbour,
+        Interpolation magnification_filter = Interpolation::Linear,
+        Wrap          wrap_width           = Wrap::Repeat,
+        Wrap          wrap_height          = Wrap::Repeat,
+        Wrap          wrap_depth           = Wrap::Repeat
+    )
         : internal::TextureBase<UniqueTexture3D, Texture3DSize, &internal::upload_data_impl>{minification_filter, magnification_filter}
     {
         set_wrap_s(_id, wrap_width);

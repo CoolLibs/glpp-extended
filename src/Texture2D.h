@@ -18,10 +18,12 @@ inline void upload_data_impl(GLuint id, ImageSize size, const void* data, Textur
 
 class Texture2D : public internal::TextureBase<UniqueTexture2D, ImageSize, &internal::upload_data_impl> {
 public:
-    explicit Texture2D(Interpolation minification_filter  = Interpolation::NearestNeighbour,
-                       Interpolation magnification_filter = Interpolation::Linear,
-                       Wrap          horizontal_wrap      = Wrap::Repeat,
-                       Wrap          vertical_wrap        = Wrap::Repeat)
+    explicit Texture2D(
+        Interpolation minification_filter  = Interpolation::NearestNeighbour,
+        Interpolation magnification_filter = Interpolation::Linear,
+        Wrap          horizontal_wrap      = Wrap::Repeat,
+        Wrap          vertical_wrap        = Wrap::Repeat
+    )
         : internal::TextureBase<UniqueTexture2D, ImageSize, &internal::upload_data_impl>{minification_filter, magnification_filter}
     {
         set_wrap_s(_id, horizontal_wrap);

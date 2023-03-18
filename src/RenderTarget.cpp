@@ -34,10 +34,7 @@ auto RenderTarget::get_current_bind_state() -> RenderTargetBindState
 
 void RenderTarget::restore_bind_state(const RenderTargetBindState& state)
 {
-    glViewport(state.viewport[0],
-               state.viewport[1],
-               state.viewport[2],
-               state.viewport[3]);
+    glViewport(state.viewport[0], state.viewport[1], state.viewport[2], state.viewport[3]);
     glBindFramebuffer(GL_READ_FRAMEBUFFER, static_cast<GLuint>(state.read_framebuffer));
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, static_cast<GLuint>(state.draw_framebuffer));
 }
@@ -82,10 +79,12 @@ void RenderTarget::blit_to(GLuint dst_framebuffer_id, ImageSize dst_framebuffer_
 {
     bind_framebuffer_as_draw(dst_framebuffer_id);
     bind_framebuffer_as_read(_framebuffer);
-    blit_framebuffer(0, 0, width(), height(),
-                     position.x, position.y,
-                     position.x + dst_framebuffer_size.width(), position.y + dst_framebuffer_size.height(),
-                     GL_COLOR_BUFFER_BIT, interpolation);
+    blit_framebuffer(
+        0, 0, width(), height(),
+        position.x, position.y,
+        position.x + dst_framebuffer_size.width(), position.y + dst_framebuffer_size.height(),
+        GL_COLOR_BUFFER_BIT, interpolation
+    );
     bind_framebuffer_as_read(dst_framebuffer_id); // Make sure that dst_framebuffer is bound also as read because we promise that it mimics bind()
 }
 

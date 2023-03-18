@@ -34,10 +34,12 @@ struct BlitTopLeftCorner {
 class RenderTarget {
 public:
     /// You can optionally upload some image data
-    explicit RenderTarget(ImageSize     size,
-                          const void*   data                  = nullptr,
-                          TextureLayout texture_layout        = {},
-                          bool          create_a_depth_buffer = false);
+    explicit RenderTarget(
+        ImageSize     size,
+        const void*   data                  = nullptr,
+        TextureLayout texture_layout        = {},
+        bool          create_a_depth_buffer = false
+    );
 
     const Texture2D&         texture() const { return _texture; }
     const UniqueFramebuffer& framebuffer() const { return _framebuffer; }
@@ -102,7 +104,7 @@ public:
         RenderTarget::restore_bind_state(_state);
     }
 
-    RenderTargetBindState_RAII(const RenderTargetBindState_RAII&) = delete;
+    RenderTargetBindState_RAII(const RenderTargetBindState_RAII&)            = delete;
     RenderTargetBindState_RAII& operator=(const RenderTargetBindState_RAII&) = delete;
 
 private:
