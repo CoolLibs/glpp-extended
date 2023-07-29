@@ -29,6 +29,7 @@ target_link_libraries(glpp-extended PUBLIC glpp::glpp)
 # ---Add glm---
 add_subdirectory(lib/glm)
 target_link_libraries(glpp-extended PUBLIC glm)
+install(FILES "lib/glm/copying.txt" DESTINATION "license/glm")
 
 # ---Add source files---
 if(WARNINGS_AS_ERRORS_FOR_GLPP_EXTENDED)
