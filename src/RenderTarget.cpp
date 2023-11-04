@@ -15,7 +15,7 @@ RenderTarget::RenderTarget(ImageSize size, const void* data, TextureLayout textu
     with_bound_framebuffer([&]() {
         _texture.bind();
         _texture.upload_data(size, data, _texture_layout);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, *_texture, 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture.id(), 0);
         glpp_check_errors();
 
         if (create_a_depth_buffer)

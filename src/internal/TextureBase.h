@@ -17,7 +17,7 @@ public:
     SizeType size() const { return _size; }
     void     resize(SizeType size, TextureLayout layout = {});
     void     upload_data(SizeType size, const void* data, TextureLayout layout = {});
-    GLuint   operator*() const { return *_id; }
+    GLuint   id() const { return *_id; }
 
 protected:
     UniqueTextureT _id;
