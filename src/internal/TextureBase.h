@@ -19,6 +19,10 @@ public:
     void     upload_data(SizeType size, const void* data, TextureLayout layout = {});
     GLuint   id() const { return *_id; }
 
+    void set_minification_filter(Interpolation);
+    void set_magnification_filter(Interpolation);
+    void set_wrap(Wrap);
+
 protected:
     UniqueTextureT _id;
 

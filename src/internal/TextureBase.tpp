@@ -1,3 +1,5 @@
+#include <glpp/Functions/Texture.h>
+
 namespace glpp::internal {
 
 template<typename UniqueTextureT, typename SizeType, void (*upload_data_impl)(GLuint, SizeType, const void*, TextureLayout)>
@@ -7,8 +9,8 @@ TextureBase<UniqueTextureT, SizeType, upload_data_impl>::TextureBase(
 )
 {
     bind_texture(_id);
-    set_minification_filter(_id, minification_filter);
-    set_magnification_filter(_id, magnification_filter);
+    set_minification_filter(minification_filter);
+    set_magnification_filter(magnification_filter);
 }
 
 template<typename UniqueTextureT, typename SizeType, void (*upload_data_impl)(GLuint, SizeType, const void*, TextureLayout)>
@@ -36,6 +38,24 @@ void TextureBase<UniqueTextureT, SizeType, upload_data_impl>::upload_data(SizeTy
     bind_texture(_id);
     upload_data_impl(*_id, size, data, layout);
     _size = size;
+}
+
+template<typename UniqueTextureT, typename SizeType, void (*upload_data_impl)(GLuint, SizeType, const void*, TextureLayout)>
+void TextureBase<UniqueTextureT, SizeType, upload_data_impl>::set_minification_filter(Interpolation interpolation)
+{
+    glpp::set_minification_filter(_id, interpolation);
+}
+
+template<typename UniqueTextureT, typename SizeType, void (*upload_data_impl)(GLuint, SizeType, const void*, TextureLayout)>
+void TextureBase<UniqueTextureT, SizeType, upload_data_impl>::set_magnification_filter(Interpolation interpolation)
+{
+    glpp::set_magnification_filter(_id, interpolation);
+}
+
+template<typename UniqueTextureT, typename SizeType, void (*upload_data_impl)(GLuint, SizeType, const void*, TextureLayout)>
+void TextureBase<UniqueTextureT, SizeType, upload_data_impl>::set_wrap(Wrap wrap)
+{
+    glpp::set_wrap(_id, wrap);
 }
 
 } // namespace glpp::internal

@@ -32,10 +32,14 @@ public:
     )
         : internal::TextureBase<UniqueTexture3D, Texture3DSize, &internal::upload_data_impl>{minification_filter, magnification_filter}
     {
-        set_wrap_s(_id, wrap_width);
-        set_wrap_t(_id, wrap_height);
-        set_wrap_r(_id, wrap_depth);
+        set_wrap_s(wrap_width);
+        set_wrap_t(wrap_height);
+        set_wrap_r(wrap_depth);
     }
+
+    void set_wrap_s(Wrap wrap) { glpp::set_wrap_s(_id, wrap); }
+    void set_wrap_t(Wrap wrap) { glpp::set_wrap_t(_id, wrap); }
+    void set_wrap_r(Wrap wrap) { glpp::set_wrap_r(_id, wrap); }
 };
 
 } // namespace glpp

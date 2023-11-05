@@ -26,9 +26,12 @@ public:
     )
         : internal::TextureBase<UniqueTexture2D, ImageSize, &internal::upload_data_impl>{minification_filter, magnification_filter}
     {
-        set_wrap_s(_id, horizontal_wrap);
-        set_wrap_t(_id, vertical_wrap);
+        set_wrap_s(horizontal_wrap);
+        set_wrap_t(vertical_wrap);
     }
+
+    void set_wrap_s(Wrap wrap) { glpp::set_wrap_s(_id, wrap); }
+    void set_wrap_t(Wrap wrap) { glpp::set_wrap_t(_id, wrap); }
 };
 
 } // namespace glpp
