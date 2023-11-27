@@ -36,7 +36,7 @@ template<typename UniqueTextureT, typename SizeType, void (*upload_data_impl)(GL
 void TextureBase<UniqueTextureT, SizeType, upload_data_impl>::upload_data(SizeType size, const void* data, TextureLayout layout)
 {
     bind_texture(_id);
-    upload_data_impl(*_id, size, data, layout);
+    upload_data_impl(_id.id(), size, data, layout);
     _size = size;
 }
 

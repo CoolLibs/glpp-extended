@@ -72,7 +72,7 @@ ImageSize RenderTarget::size() const
 
 void RenderTarget::blit_to(const RenderTarget& destination, Interpolation interpolation, BlitTopLeftCorner position)
 {
-    blit_to(*destination._framebuffer, destination.size(), interpolation, position);
+    blit_to(destination.framebuffer().id(), destination.size(), interpolation, position);
 }
 
 void RenderTarget::blit_to(GLuint dst_framebuffer_id, ImageSize dst_framebuffer_size, Interpolation interpolation, BlitTopLeftCorner position)

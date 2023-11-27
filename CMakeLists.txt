@@ -4,7 +4,7 @@ set(WARNINGS_AS_ERRORS_FOR_GLPP_EXTENDED OFF CACHE BOOL "ON iff you want to trea
 
 add_library(glpp-extended)
 add_library(glpp::extended ALIAS glpp-extended)
-target_compile_features(glpp-extended PRIVATE cxx_std_17)
+target_compile_features(glpp-extended PRIVATE cxx_std_20)
 
 # Set warning level
 if(MSVC)

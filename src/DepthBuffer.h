@@ -9,7 +9,7 @@ class DepthBuffer {
 public:
     explicit DepthBuffer(ImageSize size);
 
-    auto id() const -> GLuint { return *_id; }
+    auto id() const -> GLuint { return _id.id(); }
 
 private:
     UniqueRenderbuffer _id{};

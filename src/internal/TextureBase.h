@@ -17,7 +17,7 @@ public:
     SizeType size() const { return _size; }
     void     resize(SizeType size, TextureLayout layout = {});
     void     upload_data(SizeType size, const void* data, TextureLayout layout = {});
-    GLuint   id() const { return *_id; }
+    GLuint   id() const { return _id.id(); }
 
     void set_minification_filter(Interpolation);
     void set_magnification_filter(Interpolation);
